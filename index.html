@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Задачи по событиям в JavaScript</title>
+  <style>
+    #menu {
+      display: none;
+    }
+    #menu.visible {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Задача 1 -->
+  <h2>Задача 1</h2>
+  <input type="text" id="inputField" />
+  <button id="showButton">Показать</button>
+  <p id="output"></p>
+
+  <!-- Задача 2 -->
+  <h2>Задача 2</h2>
+  <button id="colorButton">Изменить цвет</button>
+
+  <!-- Задание 3 -->
+  <h2>Задание 3</h2>
+  <button id="testButton">Тестовая кнопка</button>
+
+  <!-- Задача 4 -->
+  <h2>Задача 4</h2>
+  <div id="outer" style="width: 300px; height: 300px; background-color: lightblue;">
+    Внешний элемент
+    <div id="inner" style="width: 100px; height: 100px; background-color: coral;">
+      Внутренний элемент
+    </div>
+  </div>
+
+  <!-- Задача 5 -->
+  <h2>Задача 5</h2>
+  <input type="text" id="inputField2" />
+  <button id="showButton2">Показать</button>
+  <p id="output2"></p>
+
+  <!-- Задача 6 -->
+  <h2>Задача 6</h2>
+  <div id="outer2" style="width: 300px; height: 300px; background-color: lightblue;">
+    Внешний элемент
+    <div id="inner2" style="width: 100px; height: 100px; background-color: coral;">
+      Внутренний элемент
+    </div>
+  </div>
+
+  <!-- Задача 7 -->
+  <h2>Задача 7</h2>
+  <button id="startButton">Старт</button>
+  <button id="stopButton">Стоп</button>
+  <p id="counter">0</p>
+
+  <!-- Задача 8 -->
+  <h2>Задача 8</h2>
+  <button id="toggleButton">Показать/Скрыть</button>
+  <div id="textBlock">
+    Этот текст можно скрыть или показать.
+  </div>
+
+  <!-- Задача 9 -->
+  <h2>Задача 9</h2>
+  <a href="https://www.google.com" id="link">Перейти на Google</a>
+
+  <!-- Задача 10 -->
+  <h2>Задача 10</h2>
+  <button id="menuButton">Меню</button>
+  <div id="menu">
+    <ul>
+      <li>Пункт 1</li>
+      <li>Пункт 2</li>
+      <li>Пункт 3</li>
+    </ul>
+  </div>
+
+  <script>
+    // Задача 1
+    document.getElementById('showButton').addEventListener('click', function() {
+      const inputValue = document.getElementById('inputField').value;
+      document.getElementById('output').textContent = inputValue;
+    });
+
+    // Задача 2
+    document.getElementById('colorButton').addEventListener('click', function() {
+      const randomColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+      this.style.backgroundColor = randomColor;
+    });
+
+    // Задание 3
+    document.getElementById('testButton').addEventListener('click', function() {
+      alert('Событие с once');
+    }, { once: true });
+
+    document.getElementById('testButton').addEventListener('click', function() {
+      alert('Событие с capture');
+    }, { capture: true });
+
+    document.getElementById('testButton').addEventListener('click', function() {
+      alert('Событие с passive');
+    }, { passive: true });
+
+    // Задача 4
+    document.getElementById('outer').addEventListener('click', function() {
+      alert('Событие в фазе захвата на внешнем элементе');
+    }, { capture: true });
+
+    document.getElementById('outer').addEventListener('click', function() {
+      alert('Событие в фазе всплытия на внешнем элементе');
+    });
+
+    document.getElementById('inner').addEventListener('click', function() {
+      alert('Событие в фазе всплытия на внутреннем элементе');
+    });
+
+    // Задача 5
+    document.getElementById('showButton2').addEventListener('click', function() {
+      const inputValue = document.getElementById('inputField2').value;
+      document.getElementById('output2').textContent = inputValue;
+    });
+
+    // Задача 6
+    document.getElementById('outer2').addEventListener('click', function() {
+      alert('Клик на внешнем элементе');
+    });
+
+    document.getElementById('inner2').addEventListener('click', function(event) {
+      alert('Клик на внутреннем элементе');
+      event.stopPropagation(); // Останавливает распространение события
+    });
+
+    // Задача 7
+    let counter = 0;
+    let timer;
+    document.getElementById('startButton').addEventListener('click', function() {
+      timer = setInterval(function() {
+        counter++;
+        document.getElementById('counter').textContent = counter;
+      }, 1000);
+    });
+
+    document.getElementById('stopButton').addEventListener('click', function() {
+      clearInterval(timer);
+    });
+
+    // Задача 8
+    document.getElementById('toggleButton').addEventListener('click', function() {
+      const textBlock = document.getElementById('textBlock');
+      if (textBlock.style.display === 'none') {
+        textBlock.style.display = 'block';
+      } else {
+        textBlock.style.display = 'none';
+      }
+    });
+
+    // Задача 9
+    document.getElementById('link').addEventListener('click', function(event) {
+      alert('Ссылка не откроется!');
+      event.preventDefault(); // Отменяет переход по ссылке
+    });
+
+    // Задача 10
+    document.getElementById('menuButton').addEventListener('click', function() {
+      document.getElementById('menu').classList.toggle('visible');
+    });
+  </script>
+
+</body>
+</html>
